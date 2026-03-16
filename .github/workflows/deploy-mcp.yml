@@ -21,7 +21,7 @@
           - name: Deploy MCP Server
             env:
               SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
-              SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
+              SNOWFLAKE_USER: TOSMITH
               SNOWFLAKE_PRIVATE_KEY_RAW: ${{ secrets.SNOWFLAKE_PRIVATE_KEY_RAW }}
               SNOWFLAKE_AUTHENTICATOR: SNOWFLAKE_JWT
               SNOWFLAKE_ROLE: SYSADMIN
