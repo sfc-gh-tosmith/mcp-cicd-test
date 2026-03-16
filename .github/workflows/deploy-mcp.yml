@@ -1,0 +1,30 @@
+    # .github/workflows/deploy-mcp.yaml
+    name: Deploy MCP Server
+    on:
+      push:
+        branches: [main]
+        paths:
+          - 'mcp-definition.sql'
+    
+    jobs:
+      deploy:
+        runs-on: ubuntu-latest
+        steps:
+          - uses: actions/checkout@v4
+            with:
+              persist-credentials: false
+          
+          - uses: snowflakedb/snowflake-cli-action@v2.0
+            with:
+              cli-version: "3.11"
+          
+          - name: Deploy MCP Server
+            env:
+              SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+              SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
+              SNOWFLAKE_PRIVATE_KEY_RAW: ${{ secrets.SNOWFLAKE_PRIVATE_KEY_RAW }}
+              SNOWFLAKE_AUTHENTICATOR: SNOWFLAKE_JWT
+              SNOWFLAKE_ROLE: SYSADMIN
+              SNOWFLAKE_WAREHOUSE: COMPUTE_WH
+            run: |
+              snow sql -f mcp-definition.sql -x
